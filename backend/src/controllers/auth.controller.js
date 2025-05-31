@@ -131,7 +131,6 @@ export const deleteAccount = async (req, res) => {
 
     // Clear cookie and respond
     res.clearCookie("jwt");
-    toast.success("Account deleted successfully");
     res.status(200).json({ message: "Account deleted" });
   } catch (err) {
     console.log("Error deleting account:", err);
