@@ -27,7 +27,16 @@ const ProfilePage = () => {
     reader.onload = async () => {
       const base64Image = reader.result;
       setSelectedImg(base64Image);
-      await updateProfile({ profilePic: base64Image });
+      try {
+        await updateProfile({ profilePic: base64Image });
+      } catch (error) {
+        // Check for 413 error (Payload Too Large)
+        if (error?.response?.status === 413) {
+          toast.error("Image is too large for server! Maximum size is 5MB.");
+        } else {
+          toast.error(error?.message || "Failed to update profile picture.");
+        }
+      }
     };
   };
 
